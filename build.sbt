@@ -1,4 +1,4 @@
-name := "scala-kata"
+name := "bowling-game-kata"
 
 version := "1.0.0"
 
