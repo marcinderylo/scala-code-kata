@@ -1,37 +1,28 @@
 package com.blogspot.marcinderylo.kata
 
-class BowlingGame {
-        private val rolls = new Array[Int](21)
-        private var currentRoll = 0
+class BowlingGame private (rolls:List[Int] = Nil) {
 
-        def roll(pins:Int) { 
-                rolls(currentRoll) = pins
-                currentRoll += 1 
-        }
+        def roll(pins:Int) = new BowlingGame(pins :: rolls)
 
         def score = {
-                var pts:Int = 0     
-                var rollIndex:Int = 0
+		def scoreFrames(frameNo:Int, rollsToScore:List[Int]): Int = if ( frameNo > 10 ) 0 else
+			( rollsToScore: @unchecked ) match {
+				case 10 :: r1 :: r2 :: rest => 
+					10 + r1 + r2 + scoreFrames(frameNo + 1, r1 :: r2 :: rest)
+				case r1 :: r2 :: r3 :: rest if r1 + r2 == 10 => 
+					10 + r3 + scoreFrames(frameNo + 1, r3 :: rest)
+				case r1 :: r2 :: rest => 
+					r1 + r2 + scoreFrames(frameNo + 1, rest)
+				case roll :: Nil => roll
+				case Nil => 0
+			}	 
 
-                def sumOfBallsInFrame = rolls(rollIndex) + rolls(rollIndex + 1)                
-                def isStrike = rolls(rollIndex) == 10
-                def strikeBonus = rolls(rollIndex + 1) + rolls(rollIndex + 2)
-                def isSpare = sumOfBallsInFrame == 10
-                def spareBonus = rolls(rollIndex + 2)
-                
-                (1 to 10) foreach (_ => {
-                        if ( isStrike ) {
-                                pts += 10 + strikeBonus
-                                rollIndex += 1
-                        } else if ( isSpare ) {
-                                pts += 10 + spareBonus
-                                rollIndex += 2
-                        } else {
-                                pts += sumOfBallsInFrame
-                                rollIndex += 2
-                        }                        
-                })
-                pts
-        }
+		scoreFrames(1, rolls.reverse)
+	}
 
+	
+}
+
+object BowlingGame {
+	def apply() = new BowlingGame
 }

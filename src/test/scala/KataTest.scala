@@ -5,31 +5,31 @@ class KataTest extends BaseSuite {
         var game:BowlingGame = _       
 
         before {
-                game = new BowlingGame
+                game = BowlingGame()
         }
 
         test("gutter game") {
-                20 times { game roll 0 }
+                20 times { roll(0) }
                 assert( game.score === 0)
         }
 
         test("all ones") {
-                20 times { game roll 1 }
+                20 times { roll(1) }
                 assert( game.score === 20)
         }
 
         test("one spare") {
                 rollSpare
-                game roll 7
-                17 times { game roll 0 }
+                roll(7)
+                17 times { roll(0) }
                 assert( game.score === 24)
         }
         
         test("one strike") {
                 rollStrike
-                game roll 4
-                game roll 5
-                16 times { game roll 0}
+                roll(4)
+                roll(5)
+                16 times { roll(0) }
                 assert( game.score === 28 )
         }
 
@@ -38,13 +38,15 @@ class KataTest extends BaseSuite {
                 assert( game.score === 300 )
         }
 
-        private def rollSpare {
-                game roll 6
-                game roll 4
-        }
+	test("incomplete game") {
+		19 times { roll(1) }
+		assert( game.score === 19 )
+	}
 
-        private def rollStrike {
-                game roll 10
-        }
+	private def roll(pins:Int) { game = game roll pins }
+
+        private def rollSpare { roll(6); roll(4) }
+
+        private def rollStrike { roll(10) }
 }
 
