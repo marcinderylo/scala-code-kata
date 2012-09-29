@@ -2,5 +2,5 @@ package com.blogspot.marcinderylo.kata
 
 object PrimeFactors {
 
-  def apply(n:Int) : List[Int] = null
+  def apply(n:Int) : List[Int] = Nil
 }
