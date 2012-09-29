@@ -8,6 +8,8 @@ object PrimeFactors {
     else
       if(n % 2 == 0) 
         2 :: apply(n / 2) 
+      else if (n % 3 == 0)
+        3 :: apply(n / 3)
       else
         List(n)
 }
