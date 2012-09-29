@@ -1,17 +1,20 @@
 package com.blogspot.marcinderylo.kata
 
+import scala.annotation.tailrec
+import scala.collection.mutable.ListBuffer
 object PrimeFactors {
 
   def apply(n:Int) : List[Int] = {
-    def startWithCandidate(candidate:Int, n : Int) : List[Int] = {
+    @tailrec
+    def startWithCandidate(primeFactorsSoFar:ListBuffer[Int], candidate:Int, n : Int) : ListBuffer[Int] = {
       if (n == 1)
-        Nil
+        primeFactorsSoFar
       else
         if (n % candidate == 0)
-          candidate :: startWithCandidate(candidate, n / candidate)
+          startWithCandidate(primeFactorsSoFar += candidate, candidate, n / candidate)
         else
-          startWithCandidate(candidate + 1, n)
+          startWithCandidate(primeFactorsSoFar, candidate + 1, n)
     }  
-    startWithCandidate(2, n)
+    startWithCandidate(ListBuffer.empty, 2, n).toList
     }
 }
