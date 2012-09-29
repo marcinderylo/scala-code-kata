@@ -2,14 +2,16 @@ package com.blogspot.marcinderylo.kata
 
 object PrimeFactors {
 
-  def apply(n:Int) : List[Int] = 
-    if (n == 1) 
-      Nil 
-    else
-      if(n % 2 == 0) 
-        2 :: apply(n / 2) 
-      else if (n % 3 == 0)
-        3 :: apply(n / 3)
+  def apply(n:Int) : List[Int] = {
+    def startWithCandidate(candidate:Int, n : Int) : List[Int] = {
+      if (n == 1)
+        Nil
       else
-        List(n)
+        if (n % candidate == 0)
+          candidate :: startWithCandidate(candidate, n / candidate)
+        else
+          startWithCandidate(candidate + 1, n)
+    }  
+    startWithCandidate(2, n)
+    }
 }

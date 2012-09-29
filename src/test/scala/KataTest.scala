@@ -27,4 +27,10 @@ class KataTest extends FunSuite {
   test("prime factors of 9") {
     assert(PrimeFactors(9) === List(3, 3))
   }
+  test("prime factors of 35") {
+    assert(PrimeFactors(35) === List(5, 7))
+  }
+  test("prime factors of 11") {
+    assert(PrimeFactors(11) === List(11))        
+  }
 }
