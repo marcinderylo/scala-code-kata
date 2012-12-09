@@ -56,8 +56,10 @@ class TennisGameTest extends FunSuite {
   }
 
   test("Deuce 4") {
-    val game = newGame.playerOneScores.playerOneScores.playerOneScores.playerOneScores.
-      playerTwoScores.playerTwoScores.playerTwoScores.playerTwoScores
+    val game = newGame.playerOneScores.playerOneScores.playerOneScores.
+      playerTwoScores.playerTwoScores.playerTwoScores.
+      playerOneScores.
+      playerTwoScores
     assert(game.score === "Deuce")
   }
 
